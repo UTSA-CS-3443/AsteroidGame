@@ -6,6 +6,8 @@ import game.model.Game;
 import game.model.entities.ShipEntity;
 import game.view.Images;
 import game.view.boilerplate.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.image.Image;
 
@@ -22,18 +24,19 @@ public class IngameOverlayView extends BufferedCanvasView {
 	public static final int MIN_HEIGHT = 56;
 
 	public final Game game;
-	public int iconOpacity;
+	public final IntegerProperty iconOpacity;
 
 	public IngameOverlayView(Game game) {
 		super(Main.DEFAULT_WINDOW_WIDTH, MIN_HEIGHT);
 		this.game = game;
-		this.iconOpacity = 0;
+		this.iconOpacity = new SimpleIntegerProperty(this, "iconOpacity");
 
-		ChangeListener<Number> onStatChange = (observable, oldValue, newValue) -> this.render();
-		game.ship.speed    .countProperty().addListener(onStatChange);
-		game.ship.fireRate .countProperty().addListener(onStatChange);
-		game.ship.firePower.countProperty().addListener(onStatChange);
-		game.ship.lives    .countProperty().addListener(onStatChange);
+		ChangeListener<Number> render = (observable, oldValue, newValue) -> this.render();
+		game.ship.speed    .countProperty().addListener(render);
+		game.ship.fireRate .countProperty().addListener(render);
+		game.ship.firePower.countProperty().addListener(render);
+		game.ship.lives    .countProperty().addListener(render);
+		this.iconOpacity                   .addListener(render);
 	}
 
 	@Override
@@ -54,7 +57,7 @@ public class IngameOverlayView extends BufferedCanvasView {
 				baseOffset += PixelBuffer.BYTES_PER_PIXEL;
 			}
 		}
-		if (this.iconOpacity > 0) {
+		if (this.iconOpacity.intValue() > 0) {
 			ShipEntity ship = this.game.ship;
 			for (int i = 0, count = ship.firePower.getCount(); i <= count; i++) {
 				this.drawStatIcon(i * 16 + 8, height - 48, Images.FIRE_POWER_STAT);
@@ -72,7 +75,7 @@ public class IngameOverlayView extends BufferedCanvasView {
 	}
 
 	private void drawStatIcon(int x, int y, Image image) {
-		int opacity = this.iconOpacity;
+		int opacity = this.iconOpacity.intValue();
 		if (opacity <= 0) return;
 		if (opacity >= 255) {
 			this.canvas.drawImage(x, y, image);

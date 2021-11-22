@@ -1,7 +1,7 @@
 package game.model;
 
 import game.common.Interpolator;
-import game.common.Util.AbstractDoubleBinding;
+import game.common.AbstractDoubleBinding;
 import game.model.entities.ShipEntity;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;

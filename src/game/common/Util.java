@@ -254,44 +254,4 @@ public class Util {
 		//type erasure will not perform any casting at runtime.
 		throw (X)(throwable);
 	}
-
-	/**
-	convenience {@link DoubleBinding} which allows
-	its dependencies to be specified at creation time.
-	they will be {@link #bind bound} during construction,
-	and {@link #unbind unbound} on {@link #dispose disposal}.
-	*/
-	public static abstract class AbstractDoubleBinding extends DoubleBinding {
-
-		private final Observable[] dependencies;
-		private ObservableList<Observable> dependenciesView;
-
-		public AbstractDoubleBinding(Observable... dependencies) {
-			this.dependencies = dependencies;
-			this.bind(dependencies);
-		}
-
-		public static AbstractDoubleBinding create(DoubleSupplier supplier, Observable... dependencies) {
-			return new AbstractDoubleBinding(dependencies) {
-
-				@Override
-				protected double computeValue() {
-					return supplier.getAsDouble();
-				}
-			};
-		}
-
-		@Override
-		public ObservableList<?> getDependencies() {
-			if (this.dependenciesView == null) {
-				this.dependenciesView = FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(this.dependencies));
-			}
-			return this.dependenciesView;
-		}
-
-		@Override
-		public void dispose() {
-			this.unbind(this.dependencies);
-		}
-	}
 }

@@ -1,7 +1,8 @@
 package game.controller;
 
+import game.common.AbstractIntegerBinding;
 import game.common.Util;
-import game.common.Util.AbstractDoubleBinding;
+import game.common.AbstractDoubleBinding;
 import game.view.GameView;
 import game.view.boilerplate.BetterTransition;
 import game.view.boilerplate.DelayedRunnable;
@@ -59,16 +60,14 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 
 		overlay.width.bind(rootPane.widthProperty());
 		ReadOnlyDoubleProperty maxHeight = rootPane.heightProperty();
-		overlay.height.bind(
-			AbstractDoubleBinding.create(
-				() -> Util.mix(IngameOverlayView.MIN_HEIGHT, maxHeight.doubleValue(), frac.doubleValue()),
-				maxHeight, frac
-			)
-		);
-		frac.addListener((observable, oldValue, newValue) -> {
-			overlay.iconOpacity = Util.round((1.0D - newValue.doubleValue()) * 255.0D);
-			overlay.render();
-		});
+		overlay.height.bind(AbstractDoubleBinding.create(
+			() -> Util.mix(IngameOverlayView.MIN_HEIGHT, maxHeight.doubleValue(), frac.doubleValue()),
+			maxHeight, frac
+		));
+		overlay.iconOpacity.bind(AbstractIntegerBinding.create(
+			() -> Util.round((1.0F - frac.floatValue()) * 255.0F),
+			frac
+		));
 		ChangeListener<Number> layout = (observable, oldValue, newValue) -> this.layout();
 		overlay.width.addListener(layout);
 		overlay.height.addListener(layout);
