@@ -1,4 +1,4 @@
-package game.view.screen;
+package game.view.menu;
 
 import game.controller.MenuHandler;
 import javafx.scene.Node;

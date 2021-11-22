@@ -1,4 +1,4 @@
-package game.view.screen;
+package game.view.menu;
 
 import game.Main;
 import game.common.Util;
@@ -27,7 +27,7 @@ public class IngameOverlayView extends BufferedCanvasView {
 	public IngameOverlayView(Game game) {
 		super(Main.DEFAULT_WINDOW_WIDTH, MIN_HEIGHT);
 		this.game = game;
-		this.iconOpacity = 255;
+		this.iconOpacity = 0;
 
 		ChangeListener<Number> onStatChange = (observable, oldValue, newValue) -> this.render();
 		game.ship.speed    .countProperty().addListener(onStatChange);

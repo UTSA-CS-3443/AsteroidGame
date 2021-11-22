@@ -1,4 +1,4 @@
-package game.view.screen;
+package game.view.menu;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;

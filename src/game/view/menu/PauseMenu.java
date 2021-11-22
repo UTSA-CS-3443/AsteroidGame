@@ -1,12 +1,12 @@
-package game.view.screen;
+package game.view.menu;
 
 import game.controller.KeyboardShipController;
 import game.controller.MenuHandler;
 import game.controller.MouseShipController;
 import game.view.GameView;
 import game.view.Images;
-import game.view.screen.ImageButton.ChoiceImageButton;
-import game.view.screen.ImageButton.SingleImageButton;
+import game.view.menu.ImageButton.ChoiceImageButton;
+import game.view.menu.ImageButton.SingleImageButton;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;

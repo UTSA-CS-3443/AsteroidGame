@@ -2,7 +2,7 @@ package game.controller;
 
 import game.view.GameView;
 import game.view.boilerplate.BetterTransition;
-import game.view.screen.GameOverMenu;
+import game.view.menu.GameOverMenu;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;

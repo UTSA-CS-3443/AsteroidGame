@@ -6,7 +6,7 @@ import game.model.Game;
 import game.view.GameView;
 import game.view.Images;
 import game.view.entities.EntityViewRegistry;
-import game.view.screen.IngameOverlayView;
+import game.view.menu.IngameOverlayView;
 import javafx.application.Application;
 import javafx.beans.binding.DoubleExpression;
 import javafx.scene.Scene;

@@ -1,8 +1,8 @@
-package game.view.screen;
+package game.view.menu;
 
 import game.controller.MenuHandler;
 import game.view.Images;
-import game.view.screen.ImageButton.SingleImageButton;
+import game.view.menu.ImageButton.SingleImageButton;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
