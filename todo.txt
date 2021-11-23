@@ -1,0 +1,140 @@
+todo:
+	special upgrades:
+		laser beam:
+			shoots a solid beam from the ship for a 5-10 seconds which does massive damage to asteroids.
+		seeking pulses:
+			makes your laser pulses fly towards the nearest asteroid instead of directly forwards for like 30 seconds or so.
+		extra life:
+			don't spawn these when the ship is maxed out on lives.
+		time warp:
+			don't spawn these when the game is currently slow.
+	lucky dice:
+		becomes a random upgrade or downgrade upon collision with the ship.
+	points:
+		can purchase upgrades.
+			useful if you keep accidentally destroying the upgrades by shooting them.
+			can only purchase stat upgrades. special upgrades cannot be purchased.
+			stat upgrades get more expensive the more of them you have.
+		the total number of points acquired (including points which have already been spent) are displayed on the game over screen as the "final score".
+	background:
+		stars for decoration, with a parallax effect.
+			the stars are purely decorative, and cannot be interacted with in any way.
+	GUI stuff:
+		stats overlay:
+			show points.
+		pause menu:
+			displays points and final score.
+			has buttons for quit, restart, settings, and upgrades.
+		settings menu:
+			cheat codes:
+				activate special functionality when used.
+					each cheat code can only be used once per game.
+				I kind of want to use secure hashing for these in the source code.
+					anyone reading the source code (or decompiling the app)
+					may be able to figure out what actions a cheat code could perform,
+					but they won't be able to see what cheat code performs those actions.
+			difficulty:
+				affects maximum game speed.
+			input mode:
+				keyboard or mouse.
+				keyboard allows arbitrary keys, not hard-coded for WASD.
+
+done:
+	spaceship:
+		always faces forwards, and shoots lasers forwards.
+		stats (see also: "upgrades"):
+			thrusters:
+				how fast the spaceship can move in response to user input.
+			fire power:
+				how much damage laser pulses do.
+			fire rate:
+				how often the ship can emit a laser pulse.
+	asteroids:
+		if the ship hits an asteroid by flying into it, GAME OVER.
+		move backwards with the background (see also: "background").
+		random sideways velocity.
+		random angular momentum.
+			if the ship hits an asteroid (with a laser) from the side, the angular momentum will change accordingly. just a little detail.
+		destroying an asteroid with a laser will give you points (see also: "points").
+			this will add to your final score.
+		random size.
+			bigger asteroids take more laser pulses to destroy.
+			bigger asteroids are worth more points (and increase your final score more).
+	upgrades:
+		every now and then an upgrade will appear instead of an asteroid.
+			changed to *in addition to* asteroids.
+		if the ship collides an upgrade, the upgrade is applied.
+		stat upgrades:
+			increase one of the ship's stats (see spaceship > stats).
+			the game will not give you upgrades for stats which are currently maxed out.
+		special upgrades:
+			wide spread:
+				shoots laser pulses in many directions instead of just straight forward.
+				also temporarily applies a rapid fire boost.
+				effect lasts for 5-10 seconds.
+			time warp:
+				slows down the background for 10-15 seconds, then it speeds up back to its previous speed.
+			extra life:
+				if the ship crashes into an asteroid while it has extra lives,
+				one life will be removed, and ghost mode is enabled for 5 seconds.
+			ghost mode:
+				the ship can fly through asteroids without impacting them for 10-15 seconds.
+				the ship visually becomes transparent while this effect is active.
+	downgrades:
+		appear like upgrades, but less commonly.
+			downgrades cannot be destroyed by lasers. they must be dodged instead.
+			stat downgrades will decrease the stat of the ship instead of increasing it.
+	background:
+		constantly moves down/backwards to make it look like the ship is always flying forwards.
+		speeds up over time.
+			difficulty setting controls a speed multiplier for the background.
+	GUI stuff:
+		stats overlay:
+			displays at the top of the screen while playing.
+			shows speed, fire rate, fire power, lives, and points.
+		pause menu:
+			shown when pressing escape.
+			pauses the game while open.
+
+canceled/changed:
+	spaceship:
+		can move left, right, up, or down, but can never go backwards. a minimum speed is enforced by the scrolling background.
+			ship can go backwards a bit, but not farther than the current background position.
+	upgrades:
+		if an upgrade is hit by a laser, it is destroyed.
+			the ship can't stop firing, so it makes little sense to have upgrades be destroyed like this.
+		stat upgrades:
+			increasing one stat decreases the other stats.
+			however, upgrading all stats still make them higher than they were without the upgrades.
+				not sure if I still want this or not.
+		special upgrades:
+			extra life:
+				if the ship crashes into an asteroid while it has at least one extra life, the asteroid will be destroyed instead of the ship.
+					ghost mode is enabled instead.
+			point boost:
+				just gives you a bunch of free points that you can spend on other upgrades (see "points").
+					meh. feels boring.
+	input:
+		no special button to fire. ship fires constantly and automatically.
+
+to be decided:
+	what to name the game?
+	should there be a way to win, or should it purely be a "play as long as you can/high score" thing?
+	should stat upgrades have names assocated with each tier?
+		this also depends on there being a limit to the number of stat upgrades the ship can acquire.
+		I wrote down 6 tiers here, but this number is up for debate too.
+		thrusters:
+			chemical thrusters -> ion thrusters -> orion drive -> fusion thrusters -> antimatter thrusters -> warp drive.
+		fire power:
+			pistol -> cannon -> rail gun -> nuke launcher -> plasma cannon -> laser pulse.
+		fire rate:
+			manual -> semi-automatic -> automatic -> rapid fire -> hell fire -> unstoppable.
+		should the tiers affect the ship's visual appearance?
+	should you be able to sell upgrades for points to buy different upgrades?
+		if we decide special upgrades can be held, should those be sellable too?
+		selling an upgrade should not affect your final score.
+		upgrades should sell for less than you would normally purchase them for, but not a *lot* less.
+	how should window resolution be handled?
+		if coordinates are absolute, then a taller window would give you an advantage as you can see more asteroids in advance.
+		if coordinates are relative, then everything could get squashed if the user picks an unusually high or low aspect ratio.
+		perhaps a combination of the two? where coordinates scale *only* with the height, and not the width.
