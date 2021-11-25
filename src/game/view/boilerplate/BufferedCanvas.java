@@ -60,15 +60,27 @@ public class BufferedCanvas {
 		//
 		//6 iterations has been tested and verified to give results
 		//within 2 ^ -32 of the correct answer for up to 1024 threads.
-		//see BufferedCanvasNewtonIterationTest.
+		//see {@link game.test.BufferedCanvasNewtonIterationTest}.
+		sliceLoop:
 		for (int sliceIndex = 1; sliceIndex < THREAD_COUNT; sliceIndex++) {
 			double target = ((double)(sliceIndex)) / ((double)(THREAD_COUNT));
 			double result = target;
+			iterationLoop:
 			for (int iteration = 0; iteration < 6; iteration++) {
 				double commonFactor = Math.sqrt(result * (1.0D - result)); //used by both value and derivative.
 				double value = 0.5D - (Math.asin(1.0D - 2.0D * result) + (2.0D - 4.0D * result) * commonFactor) / Math.PI;
+				if (Math.abs(value - target) <= 0x1.0p-32) break iterationLoop;
 				double derivative = commonFactor * 8.0D / Math.PI;
 				result -= (value - target) / derivative;
+			}
+			//this should never happen, but if newton iteration
+			//fails for any reason, default to evenly-spaced slices.
+			if (!(result >= 0.0D && result <= 1.0D)) {
+				System.err.println("Newton iteration failed for slice " + sliceIndex + '/' + THREAD_COUNT + ": " + result);
+				for (int i = 1; i < THREAD_COUNT; i++) {
+					slices[i] = ((double)(i)) / ((double)(THREAD_COUNT));
+				}
+				break sliceLoop;
 			}
 			slices[sliceIndex] = result;
 		}

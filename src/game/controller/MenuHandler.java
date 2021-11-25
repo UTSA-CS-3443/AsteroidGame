@@ -69,9 +69,10 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 			frac
 		));
 		ChangeListener<Number> layout = (observable, oldValue, newValue) -> this.layout();
-		overlay.width.addListener(layout);
+		overlay.width .addListener(layout);
 		overlay.height.addListener(layout);
 		//don't need to add listener to frac too because height will change whenever frac does.
+
 		this.setMenu(new PauseMenu(this));
 	}
 
