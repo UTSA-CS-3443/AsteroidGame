@@ -13,6 +13,7 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoublePropertyBase;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -47,6 +48,7 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 
 	private final DelayedRunnable layout;
 	private Menu menu;
+	private final ChangeListener<Bounds> menuSizeListener;
 
 	public MenuHandler(Pane rootPane, GameView gameView, IngameOverlayView overlay) {
 		this.rootPane  = rootPane;
@@ -73,6 +75,13 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 		overlay.height.addListener(layout);
 		//don't need to add listener to frac too because height will change whenever frac does.
 
+		this.menuSizeListener = (observable, oldBounds, newBounds) -> {
+			if (oldBounds.getWidth() != newBounds.getWidth() || oldBounds.getHeight() != newBounds.getHeight()) {
+				//System.out.println("bounds changed");
+				this.doLayout();
+			}
+		};
+
 		this.setMenu(new PauseMenu(this));
 	}
 
@@ -84,10 +93,12 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 	*/
 	public void setMenu(Menu menu) {
 		if (this.menu != null) { //will be null during initialization.
+			this.menu.getRootComponent().layoutBoundsProperty().removeListener(this.menuSizeListener);
 			this.rootPane.getChildren().remove(this.menu.getRootComponent());
 		}
 		this.menu = menu;
 		this.rootPane.getChildren().add(menu.getRootComponent());
+		menu.getRootComponent().layoutBoundsProperty().addListener(this.menuSizeListener);
 		this.doLayout();
 	}
 
@@ -105,7 +116,8 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 	}
 
 	private void doLayout() {
-		double x = (this.overlay.width.doubleValue() - this.menu.getRootComponent().getLayoutBounds().getWidth()) * 0.5D;
+		Bounds menuBounds = this.menu.getRootComponent().getLayoutBounds();
+		double x = (this.overlay.width.doubleValue() - menuBounds.getWidth()) * 0.5D;
 		//center = (rootPane.height - menuToDisplay.height) * 0.5
 		//offset = overlay.height - rootPane.height
 		//center + offset = (rootPane.height - menuToDisplay.height) * 0.5 + overlay.height - rootPane.height
@@ -113,7 +125,8 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 		//= rootPane.height * 0.5 - rootPane.height - menuToDisplay.height * 0.5 + overlay.height
 		//= rootPane.height * -0.5 - menuToDisplay.height * 0.5 + overlay.height
 		//= overlay.height - (rootPane.height + menuToDisplay.height) * 0.5
-		double y = this.overlay.height.doubleValue() - (this.rootPane.getHeight() + this.menu.getRootComponent().getLayoutBounds().getHeight()) * 0.5D;
+		double y = this.overlay.height.doubleValue() - (this.rootPane.getHeight() + menuBounds.getHeight()) * 0.5D;
+		//System.out.println("overlay size: " + this.overlay.width.doubleValue() + 'x' + this.overlay.height.doubleValue() + ", menu size: " + menuBounds.getWidth() + 'x' + menuBounds.getHeight() + ", relocating to: " + x + ", " + y);
 		this.menu.getRootComponent().relocate(x, y);
 	}
 

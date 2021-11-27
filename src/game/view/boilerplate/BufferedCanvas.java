@@ -25,7 +25,7 @@ public class BufferedCanvas {
 	/** the number of threads used for shaders. */
 	public static final int THREAD_COUNT;
 	/**
-	in {@link #runShaderCircle}, we want to ensure that
+	in {@link #runShaderEllipse}, we want to ensure that
 	every thread is doing the same amount of work.
 	this ensures that they all finish at (roughly) the same time,
 	and no threads are left idly waiting on other threads.
@@ -103,9 +103,9 @@ public class BufferedCanvas {
 		this.canvas = new Canvas(width, height);
 		this.pixels = new PixelBuffer(width, height);
 
-		this.canvas.widthProperty().bind(this.width);
+		this.canvas. widthProperty().bind(this.width);
 		this.canvas.heightProperty().bind(this.height);
-		this.pixels.width.bind(this.width);
+		this.pixels.width .bind(this.width);
 		this.pixels.height.bind(this.height);
 
 		PixelFormat<?> format = this.canvas.getGraphicsContext2D().getPixelWriter().getPixelFormat();

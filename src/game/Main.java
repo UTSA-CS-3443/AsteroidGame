@@ -22,7 +22,7 @@ public class Main extends Application {
 		DEFAULT_WINDOW_HEIGHT = 800.0D;
 
 	/**
-	when enabled, the {@link Game} starts at max speed,
+	when enabled, the {@link Game} starts at max {@link Game#gameSpeed speed},
 	and the {@link game.model.entities.ShipEntity ship}
 	starts with max {@link game.model.entities.ShipEntity#stats stats}.
 	*/
