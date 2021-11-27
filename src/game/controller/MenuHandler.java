@@ -78,7 +78,7 @@ public class MenuHandler implements EventHandler<KeyEvent> {
 		this.menuSizeListener = (observable, oldBounds, newBounds) -> {
 			if (oldBounds.getWidth() != newBounds.getWidth() || oldBounds.getHeight() != newBounds.getHeight()) {
 				//System.out.println("bounds changed");
-				this.doLayout();
+				this.layout();
 			}
 		};
 
