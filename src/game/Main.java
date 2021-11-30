@@ -59,6 +59,7 @@ public class Main extends Application {
 		primaryStage.setMinWidth(200.0D);
 		primaryStage.setMinHeight(200.0D);
 		primaryStage.getIcons().setAll(Images.SHIP);
+		primaryStage.setTitle("Shooty Asteroid Game");
 		primaryStage.show();
 
 		//debug information. useful in development.

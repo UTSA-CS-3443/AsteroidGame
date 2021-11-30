@@ -21,15 +21,15 @@ Short list:
 - [x] Surface normal for lighting
 
 #### Upgrades
-- [ ] Auto Aim
-- [ ] Extra Life (works, but need to make the game *not* give you this upgrade when you already have 3 lives)
+- [x] Extra Life
 - [x] Fire Power + associated downgrade
 - [x] Fire Rate + associated downgrade
 - [x] Ghost Mode
+- [ ] Homing Pulses
 - [ ] Laser Beam
 - [ ] Lucky Dice
 - [x] Speed + associated downgrade
-- [ ] Time Warp (works, but need to make the game *not* give you this upgrade when time is already slow)
+- [x] Time Warp
 - [x] Wide Spread
 
 #### Misc
@@ -48,8 +48,14 @@ Longer list: [Here](https://github.com/UTSA-CS-3443/AsteroidGame/blob/main/todo.
 
 Java 9.0.4 (Later versions might work, but are not tested.)
 
-JavaFX (I can't find the version number in eclipse. Good luck.)
+JavaFX (I can't find the version number in eclipse, but it should be the same version used in class.)
 
 ## Running
 
-Nothing special. Just import the project into eclipse, make sure JavaFX is on the class path, and use `game.Main` as the main class.
+Nothing special. Just import the project into eclipse, either by cloning or by importing as a zip; make sure JavaFX is on the class path, and use `game.Main` as the main class.
+
+## Known issues
+
+Time warp upgrades are spawned regardless of the game's current speed, and will not be particularly helpful to the player if the game is already running slowly. With that said, the game enforces a minimum speed, so attempting to slow the game down more than its minimum will have no effect.
+
+Extra life upgrades are spawned regardless of the ship's life count, and will not be particularly helpful to the player if the ship already has maximum lives. With that said, the game enforces a maximum number of lives, so attempting to collect more lives than that will have no effect.
